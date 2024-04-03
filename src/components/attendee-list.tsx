@@ -35,10 +35,25 @@ dayjs.extend(relativeTime)
 export function AttendeeList() {
 
   const [searchInput, setSearch  ]= useState ('')
+  const [page, setPage] = useState(1)
+  const totalPage = Math.ceil(attendees.length / 10)
 
 
   function onSearchInputChanged(event: ChangeEvent<HTMLInputElement>) {
     setSearch (event.target.value)
+}
+function goToFirstPage (){
+  setPage(1)
+}
+function goToLastPage (){
+  setPage(totalPage)
+}
+function goToNexPage (){
+  setPage(page + 1)
+}
+
+function goToPreviousPage(){
+  setPage(page - 1)
 }
   return (
     <div className=" flex flex-col gap-4">
@@ -72,7 +87,7 @@ export function AttendeeList() {
             </tr>
           </thead>
           <tbody>
-          {attendees.slice().map((ateendee) => {
+          {attendees.slice((page - 1) * 10 , page * 10).map((ateendee) => {
               return (
                 <TableRow key={ateendee.id}>
                     <TableCell>
@@ -84,9 +99,8 @@ export function AttendeeList() {
                   <TableCell>
                     <div className="flex  flex-col gap-1">
                       <span className=" font-semibold text-white">
-                      {ateendee.name}
-                      </span>
-                      <span>{ateendee.email}</span>
+                      {ateendee.name()}</span>
+                      <span>{ateendee.email()}</span>
                     </div>
                     </TableCell>
                   <TableCell>{dayjs().to(ateendee.createdAt)}</TableCell>
@@ -104,25 +118,25 @@ export function AttendeeList() {
 
             <TableCell colSpan={3}>
               
-                Showing  of  items
+                Showing 10  of {attendees.length} items
         
               </TableCell>
               <TableCell className="text-right" colSpan={3}>
                 <div className=" inline-flex items-center gap-8">
                 <span>
-                Page  of 
+                Page {page} of {totalPage} 
                 </span>
                   <div className=" flex gap-1.5">
-                    <IconButton>
+                    <IconButton onClick={goToFirstPage} disabled={page === 1}>
                       <ChevronsLeft className="size-4 " />
                     </IconButton>
-                    <IconButton>
+                    <IconButton onClick={goToPreviousPage} disabled={page === 1} >
                       <ChevronLeft className="size-4 " />
                       </IconButton>
-                    <IconButton>
+                    <IconButton onClick={goToNexPage} disabled = {page === totalPage}>
                       <ChevronRight className="size-4 " />
                       </IconButton>
-                    <IconButton>
+                    <IconButton onClick={goToLastPage} disabled = {page === totalPage}>
                       <ChevronsRight className="size-4 " />
                       </IconButton>
                   </div>
