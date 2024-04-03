@@ -13,33 +13,32 @@ import { Table } from "./table/table";
 import { TableHeader } from "./table/table-header";
 import { TableCell } from "./table/table-cell";
 import { TableRow } from "./table/table-row";
-import { ChangeEvent, useEffect, useState } from "react";
-import dayjs from "dayjs";
-import "dayjs/locale/pt-br";
-import { useState } from "react";
-//import relativeTime from "dayjs/plugin/relativeTime";
-//dayjs.extend(relativeTime);
-dayjs.locale("pt-br");
+import { ChangeEvent, useState } from "react";
+import { attendees } from "./data/attendees";
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
 
 
-interface Attendee {
+dayjs.extend(relativeTime)
+//dayjs.locale("pt-br");
+
+
+/*interface Attendee {
   id: string;
   name: string;
   email: string;
   createdAt: string;
   checkedInAt: string | null;
-}
-
-
+}*/
 
 
 export function AttendeeList() {
 
-  const [valorDoInput, ChangeInputValue  ]= useState ('')
+  const [searchInput, setSearch  ]= useState ('')
 
 
   function onSearchInputChanged(event: ChangeEvent<HTMLInputElement>) {
-    ChangeInputValue (event.target.value)
+    setSearch (event.target.value)
 }
   return (
     <div className=" flex flex-col gap-4">
@@ -51,7 +50,7 @@ export function AttendeeList() {
             className="bg-transparent flex-1 outline-none border-0 p-0 text-sm ring-0"
             placeholder="search participant..."
           />
-          {valorDoInput}
+          {searchInput}
         </div>
       </div>
 
@@ -73,7 +72,7 @@ export function AttendeeList() {
             </tr>
           </thead>
           <tbody>
-          {attendees.map((ateendee) => {
+          {attendees.slice().map((ateendee) => {
               return (
                 <TableRow key={ateendee.id}>
                     <TableCell>
@@ -90,22 +89,12 @@ export function AttendeeList() {
                       <span>{ateendee.email}</span>
                     </div>
                     </TableCell>
-                  <TableCell>
-                  {dayjs().to(ateendee.createdAt)}
-                    </TableCell>
-                  <TableCell>
-                  {ateendee.checkedInAt === null ? (
-                    <span className="text-zinc-400">Não fez check-in</span>
-                  ) : (
-                    dayjs().to(ateendee.checkedInAt)
-                  )}
-                    </TableCell>
-                  <TableCell> 
+                  <TableCell>{dayjs().to(ateendee.createdAt)}</TableCell>
+                  <TableCell>{dayjs().to(ateendee.checkedInAt)}</TableCell> 
                     <IconButton transparent>
                     <MoreHorizontal className="size-4 " />
                     </IconButton>
-                    </TableCell>
-                  </TableRow>
+                    </TableRow>
               );
             })}
           </tbody>
@@ -115,13 +104,13 @@ export function AttendeeList() {
 
             <TableCell colSpan={3}>
               
-                Showing {attendees.length} of {total} items
+                Showing  of  items
         
               </TableCell>
               <TableCell className="text-right" colSpan={3}>
                 <div className=" inline-flex items-center gap-8">
                 <span>
-                  Page {page} of {totalPages}
+                Page  of 
                 </span>
                   <div className=" flex gap-1.5">
                     <IconButton>
