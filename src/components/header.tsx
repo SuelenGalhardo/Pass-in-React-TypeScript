@@ -10,8 +10,8 @@ export function Header () {
    <img src={nlwUniteIcon} />
 
    <nav className=' flex items-center gap-5'>
-    <a href="" className=' font-medium text-sm text-zinc-300'> Eventos</a>
-    <a href="" className=' font-medium text-sm'>Participantes</a>
+    <a href="" className=' font-medium text-sm text-zinc-300'> Events</a>
+    <a href="" className=' font-medium text-sm'>Participants</a>
    </nav>
 
 </div>
