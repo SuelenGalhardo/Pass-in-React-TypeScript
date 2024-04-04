@@ -74,7 +74,7 @@ export function AttendeeList() {
         setAttendees(data.attendees);
         setTotal(data.total);
       });
-  }, [page, Search]);
+  }, [page, search]);
 
 
 
@@ -137,7 +137,7 @@ export function AttendeeList() {
             <TableHeader style={{ width: 48 }}>
               <input
                 type="checkbox"
-                className="size-4 bg-black/20 rounded border border-white/10"
+                className="size-4 bg-black/20 rounded border border-white/10 checked:bg-yellow-300"
               />
             </TableHeader>
             <TableHeader>Code</TableHeader>
@@ -154,7 +154,7 @@ export function AttendeeList() {
                 <TableCell>
                   <input
                     type="checkbox"
-                    className=" size-4 bg-black/20 rounded border border-white/10"
+                    className=" size-4 bg-black/20 rounded border border-white/10 checked:bg-yellow-300"
                   />
                 </TableCell>
                 <TableCell> {ateendee.id}</TableCell>
@@ -180,7 +180,7 @@ export function AttendeeList() {
         <tfoot>
           <tr>
             <TableCell colSpan={3}>
-              Showing 10 of {attendees.length} items
+              Showing {attendees.length} of {total} items
             </TableCell>
             <TableCell className="text-right" colSpan={3}>
               <div className=" inline-flex items-center gap-8">
